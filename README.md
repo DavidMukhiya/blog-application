@@ -5,9 +5,6 @@
 * For project management and to maximize my efficiency. I will be using kanban board an agile project management tool.
 * For the Mockup Design, I will be using canva.
 
-## My Mockup Design
-![Favorite Quote!](favorite-quote.png)
-
 ## Tools, Framework and Language
 * I am using HTML, CSS, JavaScript, React, and Bootstrap for Frontend.
 * I will use Java Programming Language &  Spring Boot for REST API.
