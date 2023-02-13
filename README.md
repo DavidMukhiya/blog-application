@@ -6,7 +6,9 @@
 * For the Mockup Design, I will be using canva.
 
 ## ER Diagram
-![Blog-Application ER Diagram!](ER Diagram.png)
+#
+![Blog-Application ER Diagram!](ER-Diagram.png)
+#
 
 ## Tools, Framework and Language
 * I am using HTML, CSS, JavaScript, React, and Bootstrap for Frontend.
