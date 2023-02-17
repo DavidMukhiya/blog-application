@@ -1,12 +1,14 @@
 package com.david.blogapplication.services.impl;
 
 import com.david.blogapplication.entities.User;
+import com.david.blogapplication.exceptions.ResourceNotFoundException;
 import com.david.blogapplication.payloads.UserDto;
 import com.david.blogapplication.repositories.UserRepo;
 import com.david.blogapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
 
@@ -21,23 +23,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto user, Integer userId) {
-        return null;
+    public UserDto updateUser(UserDto userDto, Integer userId) {
+        User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", " id ", userId));
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setAbout(userDto.getAbout());
+
+        User updatedUser = this.userRepo.save(user);
+        UserDto updatedUserDto = this.userToDto(updatedUser);
+
+        return updatedUserDto;
     }
 
     @Override
     public UserDto getUserById(Integer userId) {
-        return null;
+        User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", " Id ", userId));
+        return this.userToDto(user);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        return null;
+        List<User> users = this.userRepo.findAll();
+        List<UserDto> userDtos =  users.stream().map(user-> this.userToDto(user)).collect(Collectors.toList());
+        return userDtos;
     }
 
     @Override
     public void deleteUser(Integer userId) {
-
+        User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", " Id ", userId ));
+        this.userRepo.delete(user);
     }
 
     private User dtoToUser(UserDto userDto){
