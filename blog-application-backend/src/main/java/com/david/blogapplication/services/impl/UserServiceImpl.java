@@ -6,10 +6,12 @@ import com.david.blogapplication.payloads.UserDto;
 import com.david.blogapplication.repositories.UserRepo;
 import com.david.blogapplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
