@@ -28,9 +28,15 @@ public class PostController {
 
     //get all post
     @GetMapping("/posts")
+<<<<<<< HEAD
     public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber, @RequestParam(value="pageSize", defaultValue = "5", required = false) Integer pageSize){
         PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize);
         return  ResponseEntity.ok(postResponse);
+=======
+    public ResponseEntity<List<PostDto>> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber, @RequestParam(value="pageSize", defaultValue = "5", required = false) Integer pageSize){
+        List<PostDto> allPost = this.postService.getAllPost(pageNumber, pageSize);
+        return  ResponseEntity.ok(allPost);
+>>>>>>> 2cc3aa359323ffa263ffd971ad848183bff93c21
     }
 
     //get post by id
