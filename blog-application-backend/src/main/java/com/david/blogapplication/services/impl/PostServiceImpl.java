@@ -57,13 +57,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post getPostById(Integer postId) {
-        return null;
+    public PostDto getPostById(Integer postId) {
+        Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post ", " Post Id", postId));
+        return this.modelMapper.map(post, PostDto.class);
     }
 
     @Override
-    public List<Post> getAllPost() {
-        return null;
+    public List<PostDto> getAllPost() {
+        List<Post> allPosts = this.postRepo.findAll();
+        List<PostDto> allPost = allPosts.stream().map(post -> modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+        return allPost;
     }
 
     @Override

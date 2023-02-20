@@ -16,11 +16,26 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
     //create
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @PathVariable Integer userId, @PathVariable Integer categoryId){
         PostDto newPostDto = this.postService.createPost(postDto, userId, categoryId);
         return new ResponseEntity<>(newPostDto, HttpStatus.CREATED);
+    }
+
+    //get all post
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPosts(){
+        List<PostDto> allPost = this.postService.getAllPost();
+        return  ResponseEntity.ok(allPost);
+    }
+
+    //get post by id
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable Integer postId){
+        PostDto postById = this.postService.getPostById(postId);
+        return ResponseEntity.ok(postById);
     }
 
     //get posts by user
