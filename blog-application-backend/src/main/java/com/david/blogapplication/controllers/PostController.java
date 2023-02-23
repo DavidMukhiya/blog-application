@@ -2,15 +2,24 @@ package com.david.blogapplication.controllers;
 
 import com.david.blogapplication.config.AppConstants;
 import com.david.blogapplication.entities.Post;
+import com.david.blogapplication.exceptions.ResourceNotFoundException;
 import com.david.blogapplication.payloads.ApiResponse;
 import com.david.blogapplication.payloads.PostDto;
 import com.david.blogapplication.payloads.PostResponse;
+import com.david.blogapplication.services.FileService;
 import com.david.blogapplication.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -18,8 +27,13 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
+    @Autowired
+    private FileService fileService;
+
+    @Value("${project.image}")
+    private String path;
     //create
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @PathVariable Integer userId, @PathVariable Integer categoryId){
@@ -77,5 +91,19 @@ public class PostController {
     public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keywords){
         List<PostDto> result = this.postService.searchPosts(keywords);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/post/image/upload/{postId}")
+    public ResponseEntity<PostDto> uploadPostImage(@RequestParam("image") MultipartFile image, @PathVariable Integer postId) {
+        PostDto updatePost;
+        try {
+            PostDto postDto = this.postService.getPostById(postId);
+            String fileName = this.fileService.uploadImage(path, image);
+            postDto.setImageName(fileName);
+            updatePost = this.postService.updatePost(postDto, postId);
+        } catch (IOException e) {
+            throw new ResourceNotFoundException("Image", "Post ID", postId);
+        }
+        return ResponseEntity.ok(updatePost);
     }
 }
