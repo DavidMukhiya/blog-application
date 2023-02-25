@@ -1,5 +1,6 @@
 package com.david.blogapplication.entities;
 
+import com.david.blogapplication.payloads.CommentDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
