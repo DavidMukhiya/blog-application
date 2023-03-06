@@ -12,6 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { signUp } from "../services/user-service";
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -37,31 +38,37 @@ const Signup = () => {
   };
 
   //reseting the form
-  const resetData = ()=>{
+  const resetData = () => {
     setData({
       name: "",
       email: "",
       password: "",
       about: "",
-    })
-  }
+    });
+  };
 
   //submitting the form
-  const submitForm = (event)=>{
-    event.preventDefault()
-    console.log(data)
+  const submitForm = (event) => {
+    event.preventDefault();
+    console.log(data);
     //data validate
 
     //call server api for sending data
-
-  }
-
-
+    signUp(data)
+      .then((resp) => {
+        console.log(resp);
+        console.log("success log");
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error log");
+      });
+  };
 
   return (
     <Container>
       <Row className="mt-4">
-      {JSON.stringify(data)}
+        {JSON.stringify(data)}
         <Col
           sm={{ size: 12, offset: 0 }}
           md={{ size: 6, offset: 3 }}
@@ -73,7 +80,7 @@ const Signup = () => {
               <h3>Fill Information to Register !!</h3>
             </CardHeader>
             <CardBody>
-              <Form onSubmit={submitForm} >
+              <Form onSubmit={submitForm}>
                 {/* Name Field */}
                 <FormGroup>
                   <Label for="name">Enter Name</Label>
@@ -105,7 +112,7 @@ const Signup = () => {
                     type="password"
                     placeholder="Enter here"
                     id="password"
-                    onChange={(e)=>handleChange(e, 'password')}
+                    onChange={(e) => handleChange(e, "password")}
                     value={data.password}
                   />
                 </FormGroup>
@@ -118,7 +125,7 @@ const Signup = () => {
                     placeholder="Enter here"
                     id="about"
                     style={{ height: "250px" }}
-                    onChange={(e)=>handleChange(e,'about')}
+                    onChange={(e) => handleChange(e, "about")}
                     value={data.about}
                   />
                 </FormGroup>
@@ -127,7 +134,12 @@ const Signup = () => {
                   <Button outline color="light">
                     Register
                   </Button>
-                  <Button color="secondary" type="reset" className="ms-2" onClick={resetData}>
+                  <Button
+                    color="secondary"
+                    type="reset"
+                    className="ms-2"
+                    onClick={resetData}
+                  >
                     Reset
                   </Button>
                 </Container>
