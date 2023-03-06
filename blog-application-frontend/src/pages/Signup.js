@@ -13,6 +13,7 @@ import {
   Col,
 } from "reactstrap";
 import { signUp } from "../services/user-service";
+import {toast} from 'react-toastify'
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -58,10 +59,18 @@ const Signup = () => {
       .then((resp) => {
         console.log(resp);
         console.log("success log");
+        toast.success("User is registered successfully")
+        setData({
+          name: "",
+          email: "",
+          password: "",
+          about: "",
+        })
       })
       .catch((error) => {
         console.log(error);
         console.log("error log");
+        toast.error("User is ")
       });
   };
 
@@ -119,7 +128,7 @@ const Signup = () => {
 
                 {/* About Field */}
                 <FormGroup>
-                  <Label for="about">Enter Name</Label>
+                  <Label for="about">Write someething about yourself</Label>
                   <Input
                     type="textarea"
                     placeholder="Enter here"

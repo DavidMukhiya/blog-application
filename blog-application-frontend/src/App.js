@@ -7,11 +7,14 @@ import Signup from './pages/Signup'
 import About from './pages/About';
 import Header from './components/Header';
 import Services from './pages/Services';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function App() {
   return (
    <BrowserRouter>
+   <ToastContainer position='top-center' />
    <Header/>
     <Routes>
       <Route path='/' element={<Home/>}/>
