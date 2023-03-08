@@ -8,6 +8,9 @@
 ## ER Diagram
 ![Blog-Application ER Diagram!](ER-Diagram.png)
 
+## UI
+![Blog-Application SignUp Form!](Sign-Up-Form.png)
+
 ## Tools, Framework and Language
 * I am using HTML, CSS, JavaScript, React, and Bootstrap for Frontend.
 * I will use Java Programming Language &  Spring Boot for REST API.
