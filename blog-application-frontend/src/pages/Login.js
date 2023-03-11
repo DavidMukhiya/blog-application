@@ -13,6 +13,7 @@ import {
   Input,
   Button,
 } from "reactstrap";
+import { doLogin } from "../auth";
 import { loginUser } from "../services/user-service";
 
 const Login = () => {
@@ -44,15 +45,22 @@ const Login = () => {
 
     //submit the data to server to generate token
     loginUser(loginDetail)
-      .then((jwtTokenData) => {
-        console.log("user login: ");
-        console.log(jwtTokenData);
+      .then((data) => {
+        console.log("user login:");
+        console.log(data);
+
+        //save the data to localstorage
+        doLogin(data, ()=>{
+          console.log("Login detail is save to local storage")
+        })
+
+        toast.success("Login Success");
       })
       .catch((error) => {
         console.log(error);
-        if(error.response.status===400 || error.response.status===404){
-          toast.error(error.response.data.message)
-        }else{
+        if (error.response.status === 400 || error.response.status === 404) {
+          toast.error(error.response.data.message);
+        } else {
           toast.error("Something went wrong on server !!");
         }
       });
