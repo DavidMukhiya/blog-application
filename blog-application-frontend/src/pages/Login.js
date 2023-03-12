@@ -52,6 +52,7 @@ const Login = () => {
         //save the data to localstorage
         doLogin(data, ()=>{
           console.log("Login detail is save to local storage")
+          //redirect to user dashboard page
         })
 
         toast.success("Login Success");
