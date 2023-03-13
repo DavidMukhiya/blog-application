@@ -1,11 +1,13 @@
 package com.david.blogapplication.controllers;
 
+import com.david.blogapplication.entities.User;
 import com.david.blogapplication.exceptions.ApiException;
 import com.david.blogapplication.payloads.JwtAuthRequest;
 import com.david.blogapplication.payloads.JwtAuthResponse;
 import com.david.blogapplication.payloads.UserDto;
 import com.david.blogapplication.security.JwtTokenHelper;
 import com.david.blogapplication.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,11 @@ public class AuthController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ModelMapper mapper;
+
+
+
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
         this.authenticate(request.getUsername(), request.getPassword());
@@ -46,6 +53,7 @@ public class AuthController {
 
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(token);
+        response.setUser(this.mapper.map((User)userDetails, UserDto.class));
         return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
     }
 
