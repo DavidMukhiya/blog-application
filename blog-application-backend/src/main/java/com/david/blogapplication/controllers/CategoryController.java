@@ -12,11 +12,19 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/categories")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    //get all
+    @GetMapping("/")
+    public ResponseEntity<List<CategoryDto>> getAllCategory(){
+        List<CategoryDto> categoryDtos = this.categoryService.getAllCategory();
+        return ResponseEntity.ok(categoryDtos);
+    }
 
     //create
     @PostMapping("/")
@@ -45,12 +53,6 @@ public class CategoryController {
         return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
-    //get all
-    @GetMapping("/")
-    public ResponseEntity<List<CategoryDto>> getAllCategory(){
-        List<CategoryDto> categoryDtos = this.categoryService.getAllCategory();
-        return ResponseEntity.ok(categoryDtos);
-    }
 
 
 }
