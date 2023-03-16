@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, CardBody, Container, Form, Input, Label } from "reactstrap";
 import { loadAllCategories } from "../services/category-service";
 
 const AddPost = () => {
 
+  const [categories, setCategories] = useState([])
+
   useEffect(()=>{
     loadAllCategories().then((data)=>{
         console.log(data)
+        setCategories(data)
     }).catch(error=>{
         console.log(error)
     })
@@ -45,9 +48,13 @@ const AddPost = () => {
                 placeholder="Enter here"
                 className="rounded-0"
               >
-                <option>Programming</option>
-                <option>Insurance</option>
-                <option>Science</option>
+                {
+                  categories.map((category)=>(
+                    <option key={category.categoryId}>
+                      {category.categoryTitle}
+                    </option>
+                  ))
+                }
               </Input>
             </div>
             <Container className="text-center">
