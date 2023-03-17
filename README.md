@@ -8,7 +8,7 @@
 ## ER Diagram
 ![Blog-Application ER Diagram!](ER-Diagram.png)
 
-## UI
+## Sign Up Form
 ![Blog-Application SignUp Form!](Sign-Up-Form.png)
 
 ## Tools, Framework and Language
