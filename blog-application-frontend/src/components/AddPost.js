@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Card, CardBody, Container, Form, Input, Label } from "reactstrap";
 import { loadAllCategories } from "../services/category-service";
+import JoditEditor from "jodit-react";
 
 const AddPost = () => {
 
+  const editor = useRef(null)
+  const [content, setContent] = useState('')
   const [categories, setCategories] = useState([])
+
+  const config = {
+    placeholder:"Start typing..."
+  }
 
   useEffect(()=>{
     loadAllCategories().then((data)=>{
@@ -32,12 +39,19 @@ const AddPost = () => {
             </div>
             <div className="my-3">
               <Label for="content">Post content</Label>
-              <Input
+              {/* <Input
                 type="textarea"
                 id="content"
                 placeholder="Enter here"
                 className="rounded-0"
                 style={{ height: "300px" }}
+              /> */}
+
+              <JoditEditor
+                ref={editor}
+                value={content}
+                config={config}
+                onChange={newContent => setContent(newContent)}
               />
             </div>
             <div className="my-3">
