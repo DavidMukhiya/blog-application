@@ -9,6 +9,12 @@ const AddPost = () => {
   const [content, setContent] = useState('')
   const [categories, setCategories] = useState([])
 
+  const [post, setPost] = useState({
+    title:'',
+    content:'',
+    categoryId:''
+  })
+
   const config = {
     placeholder:"Start typing..."
   }
@@ -21,6 +27,11 @@ const AddPost = () => {
         console.log(error)
     })
   },[])
+
+  //field changed function
+  const fieldChanged = (event)=>{
+    console.log(event)
+  }
 
   return (
     <div className="wrapper">
@@ -35,6 +46,7 @@ const AddPost = () => {
                 id="title"
                 placeholder="Enter here"
                 className="rounded-0"
+                onChange={fieldChanged}
               />
             </div>
             <div className="my-3">
