@@ -30,7 +30,7 @@ const AddPost = () => {
 
   //field changed function
   const fieldChanged = (event)=>{
-    console.log(event)
+    setPost({...post, 'title':event.target.value})
   }
 
   return (
@@ -46,6 +46,7 @@ const AddPost = () => {
                 id="title"
                 placeholder="Enter here"
                 className="rounded-0"
+                name="username"
                 onChange={fieldChanged}
               />
             </div>
