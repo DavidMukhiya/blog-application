@@ -6,7 +6,7 @@ import JoditEditor from "jodit-react";
 const AddPost = () => {
 
   const editor = useRef(null)
-  const [content, setContent] = useState('')
+  // const [content, setContent] = useState('')
   const [categories, setCategories] = useState([])
 
   const [post, setPost] = useState({
@@ -15,9 +15,9 @@ const AddPost = () => {
     categoryId:''
   })
 
-  const config = {
-    placeholder:"Start typing..."
-  }
+  // const config = {
+  //   placeholder:"Start typing..."
+  // }
 
   useEffect(()=>{
     loadAllCategories().then((data)=>{
@@ -30,15 +30,26 @@ const AddPost = () => {
 
   //field changed function
   const fieldChanged = (event)=>{
-    setPost({...post, 'title':event.target.value})
+    setPost({...post, [event.target.name]:event.target.value})
   }
 
+  const contentFieldChanged = (data)=>{
+    setPost({...post, 'content':data})
+  }
+
+
+  //create post function
+  const createPost = (event) =>{
+    event.preventDefault();
+    // console.log("form submitted")
+    console.log(post)
+  }
   return (
     <div className="wrapper">
       <Card className="shadow-sm border-0 mt-2" >
         <CardBody>
           <h3>What's going in your mind</h3>
-          <Form>
+          <Form onSubmit={createPost} >
             <div className="my-3">
               <Label for="title">Post title</Label>
               <Input
@@ -62,9 +73,8 @@ const AddPost = () => {
 
               <JoditEditor
                 ref={editor}
-                value={content}
-                config={config}
-                onChange={newContent => setContent(newContent)}
+                value={post.content}
+                onChange={(newContent)=>contentFieldChanged}
               />
             </div>
             <div className="my-3">
@@ -74,6 +84,8 @@ const AddPost = () => {
                 id="category"
                 placeholder="Enter here"
                 className="rounded-0"
+                name="categoryId"
+                onChange={fieldChanged}
               >
                 {
                   categories.map((category)=>(
@@ -85,10 +97,10 @@ const AddPost = () => {
               </Input>
             </div>
             <Container className="text-center">
-                <Button className="rounded-0" color="primary">
+                <Button type="submit" className="rounded-0" color="primary">
                     Create Post
                 </Button>
-                <Button className="rounded-0 ms-2" color="danger">
+                <Button  className="rounded-0 ms-2" color="danger">
                     Reset Content
                 </Button>
             </Container>
