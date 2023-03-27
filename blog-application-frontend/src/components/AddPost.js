@@ -12,6 +12,7 @@ import { loadAllCategories } from "../services/category-service";
 import JoditEditor from "jodit-react";
 import { createPost as doCreatePost} from "../services/post-service";
 import { getCurrentUserDetail } from "../auth";
+import { toast } from "react-toastify";
 
 const AddPost = () => {
   const editor = useRef(null);
@@ -48,7 +49,7 @@ const AddPost = () => {
   };
 
   const contentFieldChanged = (data) => {
-    setPost({ ...post, content: data });
+    setPost({ ...post, 'content': data });
   };
 
   //create post function
@@ -72,10 +73,10 @@ const AddPost = () => {
     //submit the form on server
     post['userId']=user.id
     doCreatePost(post).then(data=>{
-      alert("post created ")
+      toast.success("Post created ")
       console.log(post)
     }).catch((error)=>{
-      alert("error")
+      toast.error("Post not created due to some error !!")
       console.log(error)
     })
   };
@@ -126,7 +127,7 @@ const AddPost = () => {
               >
               <option disabled value={0}>--Select Category--</option>
                 {categories.map((category) => (
-                  <option key={category.categoryId}>
+                  <option key={category.categoryId} value={category.categoryId}>
                     {category.categoryTitle}
                   </option>
                 ))}
