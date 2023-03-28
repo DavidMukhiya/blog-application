@@ -73,7 +73,12 @@ const AddPost = () => {
     //submit the form on server
     post['userId']=user.id
     doCreatePost(post).then(data=>{
-      toast.success("Post created ")
+      toast.success("Post created !!")
+      setPost({
+        title:'',
+        content:'',
+        categoryId:''
+      })
       console.log(post)
     }).catch((error)=>{
       toast.error("Post not created due to some error !!")

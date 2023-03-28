@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { Container } from "reactstrap";
+import NewFeed from "../components/NewFeed";
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <Container className="mt-3" >
+      <NewFeed />
+    </Container>
+  );
+};
 
-export default Home
+export default Home;
